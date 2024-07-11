@@ -8,13 +8,15 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  name      String?  @db.VarChar(255)
-  email     String?  @db.VarChar(255)
-  user_id   String   @unique @db.VarChar(255)
-  password  String   @db.VarChar(255)
-  createdat DateTime @default(now())
-  updatedat DateTime @updatedAt
+  id        Int       @id @default(autoincrement())
+  name      String?   @db.VarChar(255)
+  email     String?   @db.VarChar(255)
+  user_id   String    @unique @db.VarChar(255)
+  password  String    @db.VarChar(255)
+  createdat DateTime  @default(now())
+  updatedat DateTime  @updatedAt
+
+  chatRooms  ChatRoom[] @relation("ChatRoomUser")
 }
 
 model Codi_Result {
@@ -22,6 +24,28 @@ model Codi_Result {
   user_id      String   @db.VarChar(255)
   codi_res     String   @db.VarChar(1000)
   codi_res_url String   @db.VarChar(1000)
+  createdat    DateTime @default(now())
+  updatedat    DateTime @updatedAt
+}
+
+model ChatRoom {
+  id           Int         @id @default(autoincrement())
+  user_id      String      @db.VarChar(255)
+  title        String      @db.VarChar(255)
+  createdat    DateTime    @default(now())
+  updatedat    DateTime    @updatedAt
+  messages     ChatMessage[]
+
+  user         User        @relation("ChatRoomUser", fields: [user_id], references: [user_id])
+}
+
+model ChatMessage {
+  id           Int      @id @default(autoincrement())
+  chatroom_id  Int
+  chatRoom     ChatRoom @relation(fields: [chatroom_id], references: [id])
+  user_id      String   @db.VarChar(255)
+  role         String   @db.VarChar(255)
+  content      String   @db.VarChar(2000)
   createdat    DateTime @default(now())
   updatedat    DateTime @updatedAt
 }
