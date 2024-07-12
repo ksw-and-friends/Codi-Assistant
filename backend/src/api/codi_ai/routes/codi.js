@@ -8,6 +8,7 @@ const {
     getCodiResults,
     getChatRoomMessages
 } = require('../controllers/codi');
+const prisma = require('../../../../prisma');
 
 router.post('/chat-room', async (req, res) => {
     const { user_id, title } = req.body;
@@ -15,7 +16,8 @@ router.post('/chat-room', async (req, res) => {
         const chatRoom = await createChatRoom(user_id, title);
         res.status(200).json({ status: 200, data: chatRoom });
     } catch (error) {
-        res.status(500).json({ status: 500, message: error.message });
+        console.error('채팅방 생성 중 오류 발생:', error);
+        res.status(500).json({ status: 500, message: '채팅방 생성 중 오류가 발생했습니다.' });
     }
 });
 
@@ -25,7 +27,8 @@ router.get('/chat-rooms/:userId', async (req, res) => {
         const chatRooms = await getChatRooms(userId);
         res.status(200).json({ status: 200, data: chatRooms });
     } catch (error) {
-        res.status(500).json({ status: 500, message: error.message });
+        console.error('채팅방 목록 조회 중 오류 발생:', error);
+        res.status(500).json({ status: 500, message: '채팅방 목록을 가져오는 중 오류가 발생했습니다.' });
     }
 });
 
@@ -33,21 +36,16 @@ router.post('/chat-message', async (req, res) => {
     const { chatRoomId, user_id, content } = req.body;
     try {
         const chatRoomIdInt = parseInt(chatRoomId, 10);
-
         if (isNaN(chatRoomIdInt)) {
-            throw new Error('Invalid chatRoomId, must be an integer.');
+            throw new Error('유효하지 않은 채팅방 ID입니다. 정수여야 합니다.');
         }
-
-        const chatRoom = await prisma.ChatRoom.findUnique({
+        const chatRoom = await prisma.chatRoom.findUnique({
             where: { id: chatRoomIdInt },
         });
-
         if (!chatRoom) {
-            throw new Error('Chat room not found.');
+            throw new Error('채팅방을 찾을 수 없습니다.');
         }
-
         await addChatMessage(chatRoomIdInt, user_id, 'user', content);
-
         const result = await codiLikeClothing(chatRoomIdInt, user_id, content);
         res.status(200).json({
             status: 200,
@@ -61,9 +59,10 @@ router.post('/chat-message', async (req, res) => {
             },
         });
     } catch (error) {
+        console.error('채팅 메시지 처리 중 오류 발생:', error);
         res.status(500).json({
             status: 500,
-            message: error.message,
+            message: '채팅 메시지 처리 중 오류가 발생했습니다.',
         });
     }
 });
@@ -87,21 +86,35 @@ router.get('/codi-results/:userId', async (req, res) => {
             })),
         });
     } catch (error) {
-        console.error('오류 발생:', error);
-        res.status(500).json({ status: 500, error: '결과를 가져오는 중에 오류가 발생했습니다.' });
+        console.error('코디 결과 조회 중 오류 발생:', error);
+        res.status(500).json({ status: 500, message: '코디 결과를 가져오는 중에 오류가 발생했습니다.' });
     }
 });
 
 router.get('/chat-room-messages/:chatRoomId', async (req, res) => {
     const { chatRoomId } = req.params;
     try {
-        const chatRoom = await getChatRoomMessages(chatRoomId);
+        const chatRoomIdInt = parseInt(chatRoomId, 10);
+        if (isNaN(chatRoomIdInt)) {
+            return res.status(400).json({ 
+                status: 400, 
+                message: '유효하지 않은 채팅방 ID입니다. 정수여야 합니다.' 
+            });
+        }
+        const chatRoom = await getChatRoomMessages(chatRoomIdInt);
+        if (!chatRoom) {
+            return res.status(404).json({ 
+                status: 404, 
+                message: '채팅방을 찾을 수 없습니다.' 
+            });
+        }
         res.status(200).json({
             status: 200,
             data: chatRoom.messages,
         });
     } catch (error) {
-        res.status(500).json({ status: 500, message: error.message });
+        console.error('채팅방 메시지 조회 중 오류 발생:', error);
+        res.status(500).json({ status: 500, message: '채팅방 메시지를 가져오는 중 오류가 발생했습니다.' });
     }
 });
 

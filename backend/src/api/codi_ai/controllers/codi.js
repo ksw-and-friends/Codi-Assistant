@@ -9,12 +9,21 @@ const openai = new OpenAI({
 
 const createChatRoom = async (userId, title) => {
     try {
+        const user = await prisma.User.findUnique({
+            where: { user_id: userId },
+        });
+
+        if (!user) {
+            throw new Error('사용자를 찾을 수 없습니다.');
+        }
+
         const chatRoom = await prisma.ChatRoom.create({
             data: {
                 user_id: userId,
                 title: title,
             },
         });
+
         return chatRoom;
     } catch (error) {
         console.error('채팅방 생성 중 오류 발생:', error);
@@ -55,9 +64,6 @@ const getChatRooms = async (userId) => {
 const getChatRoomMessages = async (chatRoomId) => {
     try {
         const chatRoomIdInt = parseInt(chatRoomId, 10);
-        if (isNaN(chatRoomIdInt)) {
-            throw new Error('Invalid chatRoomId, must be an integer.');
-        }
 
         const chatRoom = await prisma.ChatRoom.findUnique({
             where: {
@@ -69,12 +75,12 @@ const getChatRoomMessages = async (chatRoomId) => {
         });
 
         if (!chatRoom) {
-            throw new Error('Chat room not found.');
+            throw new Error('채팅방을 찾을 수 없습니다.');
         }
 
         return chatRoom;
     } catch (error) {
-        console.error('Error fetching chat room messages:', error);
+        console.error('채팅방 메시지 가져오기 중 오류 발생:', error);
         throw error;
     }
 };
@@ -144,7 +150,7 @@ const getCodiResults = async (userId) => {
         });
         return results;
     } catch (error) {
-        console.error('Error fetching codi results:', error);
+        console.error('코디 결과 가져오기 중 오류 발생:', error);
         throw error;
     }
 };
