@@ -8,8 +8,7 @@ services:
             - OPENAI_API_KEY=${OPENAI_API_KEY}
             - DATABASE_URL=${DATABASE_URL}
         depends_on:
-            db:
-                condition: service_healthy
+            - db
     db:
         image: mysql:8.0
         environment:
@@ -22,4 +21,3 @@ services:
             interval: 10s
             timeout: 5s
             retries: 5
-            start_period: 30s
