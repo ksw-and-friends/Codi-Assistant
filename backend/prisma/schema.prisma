@@ -7,45 +7,46 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id        Int       @id @default(autoincrement())
-  name      String?   @db.VarChar(255)
-  email     String?   @db.VarChar(255)
-  user_id   String    @unique @db.VarChar(255)
-  password  String    @db.VarChar(255)
-  createdat DateTime  @default(now())
-  updatedat DateTime  @updatedAt
+model chatmessage {
+  id          Int      @id @default(autoincrement())
+  chatroom_id Int
+  user_id     String   @db.VarChar(255)
+  role        String   @db.VarChar(255)
+  content     String   @db.VarChar(2000)
+  createdat   DateTime @default(now())
+  updatedat   DateTime
+  chatroom    chatroom @relation(fields: [chatroom_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "ChatMessage_chatroom_id_fkey")
 
-  chatRooms  ChatRoom[] @relation("ChatRoomUser")
+  @@index([chatroom_id], map: "ChatMessage_chatroom_id_fkey")
 }
 
-model Codi_Result {
+model chatroom {
+  id          Int           @id @default(autoincrement())
+  user_id     String        @db.VarChar(255)
+  title       String        @db.VarChar(255)
+  createdat   DateTime      @default(now())
+  updatedat   DateTime
+  chatmessage chatmessage[]
+  user        user          @relation(fields: [user_id], references: [user_id], map: "ChatRoom_user_id_fkey")
+
+  @@index([user_id], map: "ChatRoom_user_id_fkey")
+}
+
+model codi_result {
   id           Int      @id @default(autoincrement())
   user_id      String   @db.VarChar(255)
   codi_res     String   @db.VarChar(1000)
   codi_res_url String   @db.VarChar(1000)
   createdat    DateTime @default(now())
-  updatedat    DateTime @updatedAt
+  updatedat    DateTime
 }
 
-model ChatRoom {
-  id           Int         @id @default(autoincrement())
-  user_id      String      @db.VarChar(255)
-  title        String      @db.VarChar(255)
-  createdat    DateTime    @default(now())
-  updatedat    DateTime    @updatedAt
-  messages     ChatMessage[]
-
-  user         User        @relation("ChatRoomUser", fields: [user_id], references: [user_id])
-}
-
-model ChatMessage {
-  id           Int      @id @default(autoincrement())
-  chatroom_id  Int
-  chatRoom     ChatRoom @relation(fields: [chatroom_id], references: [id])
-  user_id      String   @db.VarChar(255)
-  role         String   @db.VarChar(255)
-  content      String   @db.VarChar(2000)
-  createdat    DateTime @default(now())
-  updatedat    DateTime @updatedAt
+model user {
+  id        Int        @id @default(autoincrement())
+  name      String?    @db.VarChar(255)
+  user_id   String     @unique(map: "User_user_id_key") @db.VarChar(255)
+  password  String     @db.VarChar(255)
+  createdat DateTime   @default(now())
+  updatedat DateTime
+  chatroom  chatroom[]
 }
