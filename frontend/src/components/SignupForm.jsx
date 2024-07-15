@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 
 const SignupForm = () => {
     const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
     const [userId, setUserId] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
@@ -14,7 +13,7 @@ const SignupForm = () => {
         e.preventDefault();
 
         try {
-            const response = await authService.signup(name, email, userId, password);
+            const response = await authService.signup(name, userId, password);
             if (response.status === 200) {
                 alert('회원가입에 성공하였습니다.');
                 navigate('/login');
@@ -29,7 +28,6 @@ const SignupForm = () => {
         <form onSubmit={handleSubmit}>
             <h1>회원가입</h1>
             <FormInput label="이름" type="text" value={name} onChange={(e) => setName(e.target.value)} />
-            <FormInput label="이메일" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
             <FormInput label="아이디" type="text" value={userId} onChange={(e) => setUserId(e.target.value)} />
             <FormInput
                 label="비밀번호"

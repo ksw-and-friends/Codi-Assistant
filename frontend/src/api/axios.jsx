@@ -1,13 +1,13 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://www.codi.kro.kr/api';
+const API_BASE_URL = 'http://localhost:3030/api';
 
 const apiService = {
-    signup: async (userId, password, name) => {
+    signup: async (name, userId, password) => {
         const response = await axios.post(`${API_BASE_URL}/signup`, {
+            name,
             userId,
             password,
-            name,
         });
         return response.data;
     },

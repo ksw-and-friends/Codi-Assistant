@@ -20,7 +20,7 @@ const LoginForm = () => {
         } catch (error) {
             console.error('Login error:', error);
             if (error.response && error.response.status === 401) {
-                alert('잘못된 이메일 또는 비밀번호입니다.');
+                alert('잘못된 아이디 또는 비밀번호입니다.');
             } else {
                 alert('로그인에 실패하였습니다.');
             }
