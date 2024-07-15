@@ -26,7 +26,7 @@ const createChatRoom = async (userId, title) => {
 
         return chatRoom;
     } catch (error) {
-        console.error('채팅방 생성 중 오류 발생:', error);
+        console.error('채팅방 생성 중 오류 발생:', error.message);
         throw error;
     }
 };
@@ -43,7 +43,7 @@ const addChatMessage = async (chatRoomId, userId, role, content) => {
         });
         return chatMessage;
     } catch (error) {
-        console.error('메시지 추가 중 오류 발생:', error);
+        console.error('메시지 추가 중 오류 발생:', error.message);
         throw error;
     }
 };
@@ -56,7 +56,7 @@ const getChatRooms = async (userId) => {
         });
         return chatRooms;
     } catch (error) {
-        console.error('채팅방 목록 가져오기 중 오류 발생:', error);
+        console.error('채팅방 목록 가져오기 중 오류 발생:', error.message);
         throw error;
     }
 };
@@ -80,7 +80,7 @@ const getChatRoomMessages = async (chatRoomId) => {
 
         return chatRoom;
     } catch (error) {
-        console.error('채팅방 메시지 가져오기 중 오류 발생:', error);
+        console.error('채팅방 메시지 가져오기 중 오류 발생:', error.message);
         throw error;
     }
 };
@@ -138,8 +138,15 @@ const codiLikeClothing = async (chatRoomId, userId, inputClothing) => {
 
         return savedResult;
     } catch (error) {
-        console.error('추천 정보를 가져오는 중 오류 발생:', error);
-        throw error;
+        console.error('추천 정보를 가져오는 중 오류 발생:', error.message);
+
+        // 기본 응답 제공
+        const defaultResponse = {
+            codi_res: "죄송합니다. 현재 서버에 문제가 있어 추천 정보를 제공할 수 없습니다.",
+            codi_res_url: ""
+        };
+
+        return defaultResponse;
     }
 };
 
@@ -150,7 +157,7 @@ const getCodiResults = async (userId) => {
         });
         return results;
     } catch (error) {
-        console.error('코디 결과 가져오기 중 오류 발생:', error);
+        console.error('코디 결과 가져오기 중 오류 발생:', error.message);
         throw error;
     }
 };
