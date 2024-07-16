@@ -1,0 +1,89 @@
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.text {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    padding: 20px;
+}
+
+.mainTitle {
+    font-size: 50px;
+    margin-bottom: 20px;
+}
+
+.middleTitle {
+    font-size: 30px;
+    font-weight: lighter;
+}
+
+.body {
+    width: 40%;
+    background-color: white;
+    border-top-left-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.logo {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    height: 100px;
+    filter: opacity(0.5) drop-shadow(0 0 0 #8001ff);
+}
+
+.title {
+    font-size: 48px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    margin-top: 100px;
+    margin-bottom: 40px;
+}
+
+.inputBox {
+    width: 100%;
+    max-width: 350px;
+}
+
+.idInputBox {
+    margin-bottom: 20px;
+}
+
+.idInputBox > p {
+    font-weight: bolder;
+    color: gray;
+    margin-bottom: 5px;
+}
+
+.button {
+    width: 100%;
+    max-width: 350px;
+    height: 50px;
+    background-color: #8001ff;
+    color: white;
+    font-size: 17px;
+    border-radius: 5px;
+    border: none;
+    font-weight: bold;
+    margin-top: 30px;
+    cursor: pointer;
+}
+
+.aButton {
+    background-color: transparent;
+    border: none;
+    font-size: 15px;
+    color: rgb(90, 90, 90);
+    margin-top: 20px;
+    cursor: pointer;
+}

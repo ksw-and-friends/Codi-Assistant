@@ -1,0 +1,22 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-image: url(../img/abstract-1780242_1280.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 100% 0%;
+    overflow: hidden;
+}
+
+body * {
+    touch-action: none;
+}
+
+body::-webkit-scrollbar {
+    display: none;
+    overflow: hidden;
+    touch-action: none;
+}

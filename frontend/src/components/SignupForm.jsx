@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import FormInput from './FormInput';
 import authService from '../api/axios';
 import { useNavigate } from 'react-router-dom';
+import styles from '../styles/SignupForm.module.css';
+import Logo from '../img/w.png';
 
 const SignupForm = () => {
     const [name, setName] = useState('');
@@ -11,7 +13,6 @@ const SignupForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         try {
             const response = await authService.signup(name, userId, password);
             if (response.status === 200) {
@@ -25,23 +26,38 @@ const SignupForm = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <h1>회원가입</h1>
-            <FormInput label="이름" type="text" value={name} onChange={(e) => setName(e.target.value)} />
-            <FormInput label="아이디" type="text" value={userId} onChange={(e) => setUserId(e.target.value)} />
-            <FormInput
-                label="비밀번호"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-            />
-            <div>
-                <button type="submit">회원가입</button>
-                <button type="button" onClick={() => navigate('/login')}>
-                    로그인
-                </button>
+        <div className={styles.container}>
+            <div className={styles.text}>
+                <p className={styles.mainTitle}>
+                    Welcome to <b>ksw-and-friends</b>
+                </p>
+                <p className={styles.middleTitle}>Create your account</p>
             </div>
-        </form>
+            <form className={styles.body} onSubmit={handleSubmit}>
+                <img className={styles.logo} src={Logo} alt="Logo" />
+                <h1 className={styles.title}>Register</h1>
+                <div className={styles.inputBox}>
+                    <div className={styles.idInputBox}>
+                        <p>이름</p>
+                        <FormInput type="text" value={name} onChange={(e) => setName(e.target.value)} />
+                    </div>
+                    <div className={styles.idInputBox}>
+                        <p>아이디</p>
+                        <FormInput type="text" value={userId} onChange={(e) => setUserId(e.target.value)} />
+                    </div>
+                    <div className={styles.idInputBox}>
+                        <p>비밀번호</p>
+                        <FormInput type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                    </div>
+                </div>
+                <button className={styles.button} type="submit">
+                    회원가입
+                </button>
+                <button className={styles.aButton} type="button" onClick={() => navigate('/login')}>
+                    로그인 할 계정이 있으신가요?
+                </button>
+            </form>
+        </div>
     );
 };
 

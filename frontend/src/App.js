@@ -3,18 +3,11 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-d
 import SignupPage from "./pages/Signup/SignupPage";
 import LoginPage from "./pages/Login/LoginPage";
 import ChatRoom from "./pages/ChatRoom/Chat"
-import NavBar from "./components/NavBar"
+import './styles/global.css';
 import { useState } from "react";
 
 const App = () => {
-
   const [isLogin, setIsLogin] = useState(false)
-
-  const [selectedRoom, setSelectedRoom] = useState(null);
-
-  const handleSelectRoom = (roomId) => {
-    setSelectedRoom(roomId);
-  };
 
   return (
     <Router>
