@@ -3,7 +3,7 @@ import FormInput from './FormInput';
 import authService from '../api/axios';
 import { useNavigate } from 'react-router-dom';
 
-const LoginForm = () => {
+const LoginForm = ({ setIsLogin }) => {
     const [userId, setUserId] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
@@ -14,8 +14,9 @@ const LoginForm = () => {
         try {
             const response = await authService.login(userId, password);
             if (response.status === 200) {
+                localStorage.setItem('userid', response.user.userId);
                 alert('로그인에 성공하였습니다.');
-                navigate('/chat-room');
+                navigate('/chatroom');
             }
         } catch (error) {
             console.error('Login error:', error);

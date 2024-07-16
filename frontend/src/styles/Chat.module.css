@@ -1,0 +1,163 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'SUIT-Regular';
+}
+
+.Chat_component {
+    width: 100%;
+    height: 94.5vh;
+}
+
+.modal_component {
+    width: 450px;
+    height: 250px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: gray;
+    border-radius: 5px;
+    z-index: 100;
+}
+
+.own_message {
+    background-color: rgb(100, 166, 227);
+    width: 80%;
+    box-shadow: 1px 1px 10px 1px rgb(195, 195, 195);
+    margin: 20px 0 0 12px;
+    border-radius: 15px;
+    padding: 15px;
+    position: relative;
+    left: 18%;
+}
+
+.other_message {
+    width: 80%;
+    background-color: rgb(205, 205, 205);
+    box-shadow: 1px 1px 10px 1px rgb(195, 195, 195);
+    margin: 20px 0 0 12px;
+    border-radius: 15px;
+    padding: 15px;
+}
+
+.message_user {
+    margin: 0 0 5px 0;
+    font-family: 'SUIT-Regular';
+    font-weight: bold;
+}
+
+.message_content {
+    line-height: 25px;
+    overflow: scroll;
+}
+
+.chating_container {
+    width: 100%;
+    height: 93%;
+}
+
+.message_container {
+}
+
+.create_input_box {
+    width: 80%;
+    position: relative;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    display: inline-block;
+}
+
+.create_room_button {
+    width: 100%;
+    height: 50px;
+    border-bottom: 1px solid rgb(214, 214, 214);
+}
+
+.create_room_button>button {
+    width: 80%;
+    height: 70%;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.title_input{
+    width: 100%;
+    height: 35px;
+    margin: 0 0 15px 0;
+    padding:  0 0 0 5px;
+}
+
+.submit {
+    width: 100%;
+    height: 35px;
+}
+
+.close_button {
+    position: relative;
+    left: 3%;
+    top: 3%;
+}
+
+.close_button>button {
+    background-color: transparent;
+    border: none;
+}
+
+.sideBar {
+    width: 20%;
+    height: 100%;
+    border-right: 1px solid;
+    float: left;
+}
+
+.chatroom {
+    width: 100%;
+    height: 35px;
+    text-align: center;
+    padding: 6px 0;
+}
+
+.chating_component {
+    float: left;
+    width: 80%;
+    height: 100%;
+    overflow: scroll;
+    border-top: 1px solid rgb(188, 188, 188);
+}
+
+.Chat_list {
+    width: 100%;
+    height: 100%;
+}
+
+.Chat_input {
+    width: 80%;
+    height: 6%;
+    position: absolute;
+    top: 94.5%;
+    left: 25%;
+}
+
+.Chat_input>input[type="text"] {
+    width: 85%;
+    height: 40px;
+    border: none;
+    border-radius: 8px 0 0 8px;
+}
+
+.Chat_input>input[type="submit"] {
+    width: 5%;
+    height: 40px;
+    border: none;
+    border-radius: 0 8px 8px 0;
+}
+
